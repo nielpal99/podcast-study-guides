@@ -14,10 +14,10 @@ load_dotenv()
 
 from llama_index.core import StorageContext, load_index_from_storage, Settings
 from llama_index.core.query_engine import CitationQueryEngine
-from llama_index.embeddings.openai import OpenAIEmbedding
+from llama_index.embeddings.fastembed import FastEmbedEmbedding
 from llama_index.llms.anthropic import Anthropic
 
-Settings.embed_model = OpenAIEmbedding(model="text-embedding-3-small")
+Settings.embed_model = FastEmbedEmbedding(model_name="BAAI/bge-small-en-v1.5")
 Settings.llm = Anthropic(model="claude-sonnet-4-20250514", max_tokens=2048)
 
 
