@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coca-Cola — Acquired Study Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --red: #C8102E;
+    --red-light: #f5e6e9;
+    --red-mid: #e8b4bc;
+    --ink: #1a1a1a;
+    --ink-mid: #4a4a4a;
+    --ink-light: #888;
+    --paper: #faf9f7;
+    --paper-warm: #f3f0eb;
+    --border: #e2ddd8;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 72px; /* room for chat bar */
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(250,249,247,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+  }
+  .nav-brand { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a { font-size: 12px; font-weight: 500; letter-spacing: 0.04em; color: var(--ink-mid); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--red); }
+
+  /* HERO */
+  .hero { padding: 120px 2rem 80px; max-width: 900px; margin: 0 auto; }
+  .hero-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
+  .hero-eyebrow::after { content: ''; display: inline-block; width: 40px; height: 1px; background: var(--red); }
+  .hero h1 { font-family: var(--serif); font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 600; line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 1.5rem; }
+  .hero h1 em { font-style: italic; color: var(--red); }
+  .hero-meta { display: flex; gap: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+  .hero-stat { display: flex; flex-direction: column; gap: 2px; }
+  .hero-stat-value { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; color: var(--ink); }
+  .hero-stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-light); }
+  .hero-divider { width: 1px; background: var(--border); align-self: stretch; }
+
+  /* LAYOUT */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+  /* SECTIONS */
+  section { padding: 4rem 0; border-top: 1px solid var(--border); }
+  .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2.5rem; }
+  .section-number { font-family: var(--mono); font-size: 11px; color: var(--red); letter-spacing: 0.1em; }
+  .section-title { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(to bottom, var(--red), var(--border)); }
+  .timeline-item { position: relative; padding: 0 0 2rem 2rem; opacity: 0; transform: translateX(-12px); animation: slideIn 0.5s ease forwards; }
+  .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+  .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+  .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+  .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+  .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+  .timeline-item:nth-child(6) { animation-delay: 0.6s; }
+  .timeline-item:nth-child(7) { animation-delay: 0.7s; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-dot { position: absolute; left: -2rem; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--paper); border: 2px solid var(--red); transform: translateX(calc(-50% + 0.5px)); }
+  .timeline-year { font-family: var(--mono); font-size: 11px; color: var(--red); letter-spacing: 0.08em; margin-bottom: 4px; }
+  .timeline-event { font-size: 15px; color: var(--ink-mid); line-height: 1.6; }
+  @keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
+
+  /* BUSINESS MODEL */
+  .biz-summary { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: var(--ink-mid); line-height: 1.75; padding: 1.5rem 2rem; border-left: 3px solid var(--red); background: var(--paper-warm); margin-bottom: 2rem; border-radius: 0 4px 4px 0; }
+  .biz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 1rem; }
+  .biz-card { padding: 1.25rem 1.5rem; background: white; border: 1px solid var(--border); border-radius: 6px; display: flex; gap: 1rem; align-items: flex-start; transition: border-color 0.2s, transform 0.2s; }
+  .biz-card:hover { border-color: var(--red-mid); transform: translateY(-2px); }
+  .biz-card-num { font-family: var(--mono); font-size: 10px; color: var(--red); background: var(--red-light); padding: 2px 7px; border-radius: 3px; flex-shrink: 0; margin-top: 2px; }
+  .biz-card-text { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
+
+  /* FINANCIALS */
+  .financials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 2.5rem; }
+  .financial-cell { background: white; padding: 1.5rem; transition: background 0.2s; }
+  .financial-cell:hover { background: var(--paper-warm); }
+  .financial-value { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; color: var(--ink); margin-bottom: 4px; line-height: 1.2; }
+  .financial-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-light); }
+  .chart-wrap { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
+  .chart-title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+
+  /* COMPETITIVE */
+  .competitive-summary { font-size: 15px; color: var(--ink-mid); line-height: 1.75; margin-bottom: 1.5rem; }
+  .comp-list { display: flex; flex-direction: column; gap: 10px; }
+  .comp-item { display: flex; gap: 1rem; padding: 1rem 1.25rem; background: white; border: 1px solid var(--border); border-radius: 6px; align-items: flex-start; transition: border-color 0.2s; }
+  .comp-item:hover { border-color: var(--red-mid); }
+  .comp-bullet { width: 6px; height: 6px; border-radius: 50%; background: var(--red); flex-shrink: 0; margin-top: 8px; }
+  .comp-text { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
+
+  /* LESSONS */
+  .lessons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1rem; }
+  .lesson-card { padding: 1.5rem; background: white; border: 1px solid var(--border); border-radius: 6px; position: relative; overflow: hidden; transition: transform 0.2s, border-color 0.2s; }
+  .lesson-card:hover { transform: translateY(-2px); border-color: var(--red-mid); }
+  .lesson-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+  .lesson-card:hover::before { transform: scaleX(1); }
+  .lesson-num { font-family: var(--mono); font-size: 28px; color: var(--red-light); font-weight: 400; line-height: 1; margin-bottom: 8px; }
+  .lesson-text { font-size: 14px; color: var(--ink-mid); line-height: 1.7; }
+
+  /* QUOTES */
+  .quotes-stack { display: flex; flex-direction: column; gap: 1.5rem; }
+  .quote-card { padding: 2rem 2rem 1.5rem; background: white; border: 1px solid var(--border); border-radius: 6px; }
+  .quote-mark { font-family: var(--serif); font-size: 4rem; line-height: 0.6; color: var(--red-light); margin-bottom: 1rem; display: block; }
+  .quote-text { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--ink); line-height: 1.75; margin-bottom: 1rem; }
+  .quote-attribution { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--red); text-transform: uppercase; }
+
+  /* DISCUSSION */
+  .discussion-list { display: flex; flex-direction: column; gap: 1rem; }
+  .discussion-item { display: flex; gap: 1.5rem; padding: 1.25rem 1.5rem; background: white; border: 1px solid var(--border); border-radius: 6px; align-items: flex-start; transition: all 0.2s; }
+  .discussion-item:hover { background: var(--paper-warm); border-color: var(--red-mid); }
+  .discussion-num { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; color: var(--red-light); flex-shrink: 0; line-height: 1.2; min-width: 28px; }
+  .discussion-q { font-size: 15px; color: var(--ink-mid); line-height: 1.65; padding-top: 2px; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 2rem; display: flex; justify-content: space-between; align-items: center; max-width: 900px; margin: 0 auto; }
+  .footer-brand { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--ink-light); text-transform: uppercase; }
+  .footer-note { font-size: 12px; color: var(--ink-light); }
+
+  /* ── CHAT BAR ── */
+  .chat-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 200;
+    background: rgba(250,249,247,0.96);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border);
+    padding: 12px 2rem;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .chat-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink);
+    background: white;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .chat-input:focus { border-color: var(--red-mid); }
+  .chat-input::placeholder { color: var(--ink-light); }
+  .chat-send {
+    padding: 10px 18px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+  .chat-send:hover { opacity: 0.88; }
+  .chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
+  .chat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--red);
+    white-space: nowrap;
+  }
+
+  /* CHAT RESPONSE DRAWER */
+  .chat-drawer {
+    position: fixed;
+    bottom: 72px; left: 0; right: 0;
+    z-index: 190;
+    max-height: 40vh;
+    overflow-y: auto;
+    background: white;
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.08);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  .chat-drawer.open { transform: translateY(0); }
+  .chat-drawer-inner { max-width: 900px; margin: 0 auto; padding: 1.5rem 2rem; }
+  .chat-q {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .chat-answer {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+  .chat-sources { display: flex; flex-direction: column; gap: 8px; }
+  .chat-source {
+    padding: 10px 14px;
+    background: var(--paper-warm);
+    border-left: 3px solid var(--red-mid);
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+  .chat-source-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+  .chat-close {
+    float: right;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--ink-light);
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 0 4px 8px;
+  }
+  .chat-spinner {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid var(--red-light);
+    border-top-color: var(--red);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hero { padding: 90px 1.25rem 60px; }
+    .container { padding: 0 1.25rem; }
+    .hero-meta { flex-wrap: wrap; gap: 1rem; }
+    .biz-grid, .lessons-grid { grid-template-columns: 1fr; }
+    .financials-grid { grid-template-columns: repeat(2, 1fr); }
+    .chat-label { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">Acquired · Study Guide</span>
+  <ul class="nav-links">
+    <li><a href="#founding">Founding</a></li>
+    <li><a href="#model">Business Model</a></li>
+    <li><a href="#financials">Financials</a></li>
+    <li><a href="#competitive">Competitive</a></li>
+    <li><a href="#lessons">Lessons</a></li>
+    <li><a href="#quotes">Quotes</a></li>
+    <li><a href="#discussion">Discussion</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Acquired Podcast · Business Breakdown</div>
+  <h1>The <em>Coca-Cola</em><br>Company</h1>
+  <div class="hero-meta">
+    <div class="hero-stat">
+      <span class="hero-stat-value">$300B</span>
+      <span class="hero-stat-label">Market Cap</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">2.2B</span>
+      <span class="hero-stat-label">Daily Servings</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">138</span>
+      <span class="hero-stat-label">Years Operating</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">$175B</span>
+      <span class="hero-stat-label">System Revenue</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <section id="founding">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Founding story &amp; timeline</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1885</div>
+        <div class="timeline-event">Atlanta becomes a dry town, forcing Dr. John Pemberton — a Confederate veteran addicted to morphine — to pivot from his alcoholic cocaine-fortified wine to a non-alcoholic formula.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1886</div>
+        <div class="timeline-event">Pemberton nails the formula in April: sugar, caffeine, caramel, citric acid, phosphoric acid, vanilla, and a blend of fruit and spice oils — plus trace coca leaf extract. Frank Robinson names it Coca-Cola and draws the iconic Spencerian script logo.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1887</div>
+        <div class="timeline-event">First year on market: 600 gallons of syrup sold (~75,000 glasses). Robinson invents the first manufacturer's coupon — free drink tickets mailed to every address in the Atlanta City directory.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1892</div>
+        <div class="timeline-event">Asa Candler incorporates the definitive Coca-Cola Company after buying all rights for $2,300. Three employees generate $12,000 profit on $46,000 revenue in year one.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1899</div>
+        <div class="timeline-event">Candler signs the landmark bottling contract with Thomas &amp; Whitehead for a $1 token price — granting exclusive, assignable bottling rights across the US with no term limit and no price adjustment clause. The Coca-Cola system is born.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1916</div>
+        <div class="timeline-event">The contour bottle — designed to be recognizable by feel in the dark — is patented and rolled out across all bottlers, unifying the brand's physical identity.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1923</div>
+        <div class="timeline-event">Robert Woodruff becomes president at 33, negotiating full control with one condition: his father Ernest must exit entirely. He runs the company for 32 years and controls it for 60 — standardising everything from formula to advertising to bottle temperature.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1931</div>
+        <div class="timeline-event">Haddon Sundblom's Coca-Cola Santa ads debut in the Saturday Evening Post — standardising the modern image of Santa Claus in full Coca-Cola red for the next 33 years.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1941–45</div>
+        <div class="timeline-event">Woodruff pledges 5¢ Cokes for every American soldier anywhere in the world. 64 portable bottling plants ship to three continents. Over 5 billion bottles distributed — opening international markets that would have taken 25 years otherwise.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1982</div>
+        <div class="timeline-event">Diet Coke launched at Radio City Music Hall with the Rockettes. Within two years it becomes the third best-selling soft drink in America — the most successful new product launch in the company's history.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1985</div>
+        <div class="timeline-event">New Coke disaster: after 79 days of consumer outrage, Coca-Cola Classic is brought back. The accidental publicity stunt reverses a decade of Pepsi share gains and cements the original formula's cultural status forever.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="model">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Business model breakdown</h2>
+    </div>
+    <p class="biz-summary">Coca-Cola's model has always been the same at its core: manufacture a proprietary syrup, sell it to franchised partners who handle distribution, and spend the margin on marketing. What changed over 140 years is scale — the system now spans 200 bottling partners, 950 facilities, and 2.2 billion daily servings while the parent company employs only 10% of the total workforce but captures 27% of system revenue.</p>
+    <div class="biz-grid">
+      <div class="biz-card">
+        <span class="biz-card-num">01</span>
+        <span class="biz-card-text">Syrup economics create extraordinary leverage — Coke sells concentrate at $1.30/gallon; bottlers generate $6.40/gallon in retail revenue. Everyone in the chain profits, but Coke profits most.</span>
+      </div>
+      <div class="biz-card">
+        <span class="biz-card-num">02</span>
+        <span class="biz-card-text">The 1899 bottling contract was the original zero-capital-intensity expansion play — Thomas &amp; Whitehead took all operational and capital risk while Coke kept brand control and advertising.</span>
+      </div>
+      <div class="biz-card">
+        <span class="biz-card-num">03</span>
+        <span class="biz-card-text">Universal stakeholder alignment: bottlers get exclusive territories, retailers get 80%+ gross margins, restaurants get foot traffic. Robert Woodruff's rule — everyone who touches Coke makes money — is the engine of the system.</span>
+      </div>
+      <div class="biz-card">
+        <span class="biz-card-num">04</span>
+        <span class="biz-card-text">Fixed 5¢ pricing during the Depression gave Coke an unassailable market position — competitors at smaller scale couldn't match the price without destroying their margins, while Coke's scale made it profitable.</span>
+      </div>
+      <div class="biz-card">
+        <span class="biz-card-num">05</span>
+        <span class="biz-card-text">Federal antitrust exemption (1980) allows Coca-Cola to grant legally exclusive bottler territories — meaning each bottler is a protected local monopoly with every incentive to push the product hard.</span>
+      </div>
+      <div class="biz-card">
+        <span class="biz-card-num">06</span>
+        <span class="biz-card-text">The McDonald's partnership is the system's crown jewel: custom delivery, modified syrup ratios, and a company policy that no customer ever gets a lower unit price than McDonald's.</span>
+      </div>
+      <div class="biz-card">
+        <span class="biz-card-num">07</span>
+        <span class="biz-card-text">Scale economies compound: advertising spend is amortised across billions of units, each Coke sold is a billboard, and manufacturing costs per unit keep falling as volume grows — a flywheel with no natural ceiling.</span>
+      </div>
+      <div class="biz-card">
+        <span class="biz-card-num">08</span>
+        <span class="biz-card-text">Today 69% of revenue still comes from sparkling beverages and 40% of volume from trademark Coke products — the core model remains intact 140 years after invention, which itself is the most remarkable business fact of all.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="financials">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Financial milestones</h2>
+    </div>
+    <div class="financials-grid">
+      <div class="financial-cell">
+        <div class="financial-value">$2,300</div>
+        <div class="financial-label">Candler's purchase price (1891)</div>
+      </div>
+      <div class="financial-cell">
+        <div class="financial-value">$12K</div>
+        <div class="financial-label">Year one profit (1892)</div>
+      </div>
+      <div class="financial-cell">
+        <div class="financial-value">$25M</div>
+        <div class="financial-label">Woodruff acquisition (1919)</div>
+      </div>
+      <div class="financial-cell">
+        <div class="financial-value">$1.3B</div>
+        <div class="financial-label">Buffett's investment cost</div>
+      </div>
+      <div class="financial-cell">
+        <div class="financial-value">$47B</div>
+        <div class="financial-label">Annual Revenue</div>
+      </div>
+      <div class="financial-cell">
+        <div class="financial-value">$175B</div>
+        <div class="financial-label">System Revenue</div>
+      </div>
+      <div class="financial-cell">
+        <div class="financial-value">60%</div>
+        <div class="financial-label">Gross Margin</div>
+      </div>
+      <div class="financial-cell">
+        <div class="financial-value">23%</div>
+        <div class="financial-label">Net Income Margin</div>
+      </div>
+      <div class="financial-cell">
+        <div class="financial-value">$300B</div>
+        <div class="financial-label">Market Cap</div>
+      </div>
+      <div class="financial-cell">
+        <div class="financial-value">$28B</div>
+        <div class="financial-label">Berkshire's stake value</div>
+      </div>
+      <div class="financial-cell">
+        <div class="financial-value">$1B</div>
+        <div class="financial-label">Annual dividends to Berkshire</div>
+      </div>
+      <div class="financial-cell">
+        <div class="financial-value">30</div>
+        <div class="financial-label">Billion-dollar brands</div>
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-title">Syrup economics — bottler value chain</div>
+      <canvas id="bizChart" height="80"></canvas>
+    </div>
+  </section>
+
+  <section id="competitive">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">Competitive landscape</h2>
+    </div>
+    <p class="competitive-summary">Coca-Cola lost US soft drink market share from 60% in 1948 to 21% today — but built structural moats that no competitor has fully overcome. The real threat isn't Pepsi; it's the secular shift away from sugary drinks.</p>
+    <div class="comp-list">
+      <div class="comp-item"><div class="comp-bullet"></div><div class="comp-text">Trademarked Coca-Cola in 1895 and used the 1905 Federal Trademark Act to sue over 7,000 copycat cola brands out of existence by the mid-1920s — establishing that "cola" is not a generic category.</div></div>
+      <div class="comp-item"><div class="comp-bullet"></div><div class="comp-text">Exclusive access to de-cocainized coca leaves through sole supplier Schafer Alkaloid Works — a DEA-supervised federal exemption that no competitor can replicate.</div></div>
+      <div class="comp-item"><div class="comp-bullet"></div><div class="comp-text">The contour bottle's trademark (granted 1951, after 99% brand recognition) means even the physical form of the product is legally protected.</div></div>
+      <div class="comp-item"><div class="comp-bullet"></div><div class="comp-text">Fixed 5¢ pricing during the Depression was latent pricing power weaponised against subscale competitors — Coke could be profitable at a price that would bankrupt rivals.</div></div>
+      <div class="comp-item"><div class="comp-bullet"></div><div class="comp-text">The Pepsi Challenge (1975) revealed that consumers preferred Pepsi's taste in blind tests — a fact Coke had known internally since 1955 but buried. Pepsi outspent Coke on advertising by 1977.</div></div>
+      <div class="comp-item"><div class="comp-bullet"></div><div class="comp-text">World War II gave Coke a 25-year head start on international markets — 64 portable bottling plants followed the US military, creating established distribution before any competitor could enter.</div></div>
+      <div class="comp-item"><div class="comp-bullet"></div><div class="comp-text">Missed acquisitions compounded over decades: passed on Frito-Lay (now twice as profitable as Pepsi beverages), Gatorade ($16B deal killed by the board), and Monster Energy at $11B (now worth $70B).</div></div>
+      <div class="comp-item"><div class="comp-bullet"></div><div class="comp-text">The McDonald's partnership is a structural moat: no customer gets a lower price than McDonald's, and Coke sources McDonald's coffee beans — embedding Coke deep into the world's largest restaurant system.</div></div>
+    </div>
+  </section>
+
+  <section id="lessons">
+    <div class="section-header">
+      <span class="section-number">05</span>
+      <h2 class="section-title">Key lessons &amp; takeaways</h2>
+    </div>
+    <div class="lessons-grid">
+      <div class="lesson-card">
+        <div class="lesson-num">01</div>
+        <div class="lesson-text">The worst deals can create the best business models. Candler's $1 bottling contract seemed absurd but enabled capital-free national scaling — the constraint became the strategy.</div>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-num">02</div>
+        <div class="lesson-text">Universal stakeholder alignment is a durable moat. When everyone in your ecosystem — bottlers, retailers, restaurants, billboard owners — profits from promoting your product, they become your salesforce.</div>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-num">03</div>
+        <div class="lesson-text">Trade secrets outlast patents. Coca-Cola's formula has been protected for 140 years; a patent would have expired in 20. Secrecy plus myth is a more durable competitive weapon than legal exclusivity.</div>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-num">04</div>
+        <div class="lesson-text">Counter-positioning works best when the incumbent is locked in. Pepsi's 12-ounce bottle at 5¢ exploited Coke's irreversible investment in the 6.5-ounce contour bottle — the very asset that made Coke great became the constraint.</div>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-num">05</div>
+        <div class="lesson-text">Brand equity transcends product quality. Consumers chose the worse-tasting Coca-Cola Classic over the better-tasting New Coke because emotional attachment, habit, and identity are not variables in a taste test.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quotes">
+    <div class="section-header">
+      <span class="section-number">06</span>
+      <h2 class="section-title">Memorable quotes</h2>
+    </div>
+    <div class="quotes-stack">
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">We are not building Coca-Cola alone for today. We are building Coca-Cola forever. It is our hope that Coca-Cola will remain the national drink to the end of time.</p>
+        <div class="quote-attribution">— Harold Hirsch, Head of Legal</div>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">Everyone who has anything to do with Coca-Cola should make money.</p>
+        <div class="quote-attribution">— Robert Woodruff, CEO</div>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">We found that we were advertising to the few — people who needed a brain tonic — when we ought to advertise to the masses.</p>
+        <div class="quote-attribution">— Frank Robinson, Co-founder</div>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">I don't care if the consumer wants carbonated sweat in a goat skin pouch. If so, this side of the room go looking for goats and that side start running fiercely in place.</p>
+        <div class="quote-attribution">— Alfred Steele, Pepsi CEO</div>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">If you gave me $100 billion and said take away the soft drink leadership of Coca-Cola in the world, I'd give it back to you and say it can't be done.</p>
+        <div class="quote-attribution">— Warren Buffett</div>
+      </div>
+      <div class="quote-card">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">Do you want to sell sugar water for the rest of your life, or do you want to come with me and change the world?</p>
+        <div class="quote-attribution">— Steve Jobs, to Pepsi CMO John Sculley</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="discussion">
+    <div class="section-header">
+      <span class="section-number">07</span>
+      <h2 class="section-title">Discussion questions</h2>
+    </div>
+    <div class="discussion-list">
+      <div class="discussion-item">
+        <div class="discussion-num">1</div>
+        <div class="discussion-q">Was Candler's bottling contract the worst business deal in history or the best — and what does the answer tell us about how to evaluate deals in real time versus in hindsight?</div>
+      </div>
+      <div class="discussion-item">
+        <div class="discussion-num">2</div>
+        <div class="discussion-q">How did Coca-Cola's transition from patent medicine to lifestyle brand in the 1920s establish the template for modern consumer marketing — and which companies have replicated it most successfully?</div>
+      </div>
+      <div class="discussion-item">
+        <div class="discussion-num">3</div>
+        <div class="discussion-q">Was the New Coke disaster actually beneficial in the long run? Could a company deliberately orchestrate a similar "failure" today, and would it work?</div>
+      </div>
+      <div class="discussion-item">
+        <div class="discussion-num">4</div>
+        <div class="discussion-q">Given Coke's missed acquisitions of Frito-Lay, Gatorade, and Monster Energy, should the company have been more aggressive — or does focus on core competency explain their enduring margins?</div>
+      </div>
+      <div class="discussion-item">
+        <div class="discussion-num">5</div>
+        <div class="discussion-q">Can Coca-Cola successfully navigate the health-conscious consumer trend while maintaining its core portfolio — or is the shift away from sugary drinks an existential threat with no clean answer?</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <span class="footer-brand">Podcast Study Guide · Built with Claude</span>
+  <span class="footer-note">Generated from the Acquired Coca-Cola episode transcript</span>
+</footer>
+
+<!-- ── CHAT DRAWER ── -->
+<div class="chat-drawer" id="chatDrawer">
+  <div class="chat-drawer-inner">
+    <button class="chat-close" onclick="closeChat()">✕</button>
+    <div class="chat-q" id="chatQuestion"></div>
+    <div class="chat-answer" id="chatAnswer"></div>
+    <div class="chat-sources" id="chatSources"></div>
+  </div>
+</div>
+
+<!-- ── CHAT BAR ── -->
+<div class="chat-bar">
+  <span class="chat-label">Ask the transcript</span>
+  <input
+    class="chat-input"
+    id="chatInput"
+    type="text"
+    placeholder="e.g. Why did New Coke fail? What was Woodruff's management style?"
+    onkeydown="if(event.key==='Enter') sendQuestion()"
+  />
+  <button class="chat-send" id="chatSend" onclick="sendQuestion()">Ask</button>
+</div>
+
+<script>
+const ctx = document.getElementById('bizChart').getContext('2d');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Coke sells syrup at', 'Bottler revenue per gallon'],
+    datasets: [{
+      data: [1.30, 6.40],
+      backgroundColor: ['#e8b4bc', '#C8102E'],
+      borderRadius: 4,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` $${ctx.raw.toFixed(2)} per gallon` } } },
+    scales: {
+      x: { grid: { color: '#e2ddd8' }, ticks: { font: { family: 'DM Mono', size: 11 }, color: '#888', callback: v => `$${v}` } },
+      y: { grid: { display: false }, ticks: { font: { family: 'DM Sans', size: 13 }, color: '#4a4a4a' } }
+    }
+  }
+});
+
+const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:8000'
+  : 'https://podcast-study-guides-api.up.railway.app';
+const EPISODE = 'acquired';
+
+async function sendQuestion() {
+  const input = document.getElementById('chatInput');
+  const q = input.value.trim();
+  if (!q) return;
+
+  const send = document.getElementById('chatSend');
+  const drawer = document.getElementById('chatDrawer');
+  const qEl = document.getElementById('chatQuestion');
+  const aEl = document.getElementById('chatAnswer');
+  const sEl = document.getElementById('chatSources');
+
+  send.disabled = true;
+  send.innerHTML = '<span class="chat-spinner"></span>Thinking…';
+  qEl.textContent = q;
+  aEl.innerHTML = '<span class="chat-spinner"></span>';
+  sEl.innerHTML = '';
+  drawer.classList.add('open');
+
+  try {
+    const res = await fetch(`${API}/query`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ episode: EPISODE, question: q }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.detail || 'Server error');
+    }
+
+    const data = await res.json();
+    aEl.textContent = data.answer;
+
+    sEl.innerHTML = data.sources.map(s => `
+      <div class="chat-source">
+        <div class="chat-source-num">Source ${s.id}</div>
+        ${s.text}
+      </div>
+    `).join('');
+
+  } catch (e) {
+    aEl.textContent = `Error: ${e.message}. Make sure the server is running: python -m uvicorn api.server:app --reload`;
+    sEl.innerHTML = '';
+  } finally {
+    send.disabled = false;
+    send.textContent = 'Ask';
+    input.value = '';
+  }
+}
+
+function closeChat() {
+  document.getElementById('chatDrawer').classList.remove('open');
+}
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
