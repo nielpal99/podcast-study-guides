@@ -2,6 +2,6 @@ fastapi==0.115.0
 uvicorn==0.30.6
 python-dotenv==1.0.1
 anthropic==0.86.0
-llama-index==0.11.23
+llama-index==0.14.18
 llama-index-embeddings-openai==0.6.0
 llama-index-llms-anthropic==0.11.1
