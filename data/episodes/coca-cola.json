@@ -1,0 +1,97 @@
+{
+  "slug": "coca-cola",
+  "show": "Acquired",
+  "title": "Coca-Cola",
+  "published": true,
+  "tags": ["CPG", "Franchising", "Brand"],
+  "hero": {
+    "marketCap": "$300B",
+    "systemRevenue": "$175B",
+    "dailyServings": "2.2B",
+    "netMargin": "23%"
+  },
+  "founding": [
+    { "year": "1886", "event": "Dr. John Pemberton, a morphine-addicted Civil War veteran, brews Coca-Cola in his backyard as a patent medicine tonic. His bookkeeper Frank Robinson names it and writes the iconic Spencerian script logo." },
+    { "year": "1887", "event": "First year of sales — Pemberton and Robinson sell 600 gallons of syrup to soda fountains, equating to about 75,000 glasses of Coke served." },
+    { "year": "1889", "event": "Business quadruples to over 2,000 gallons of syrup sold, demonstrating rapid early product-market fit even without professional management." },
+    { "year": "1891", "event": "Asa Candler acquires full ownership for only $2,300, buying out all the various rights and claims Pemberton had sold off in his final years." },
+    { "year": "1892", "event": "First official year under Candler — with just three employees they generate $46,000 in revenue and $12,000 in profit." },
+    { "year": "1895", "event": "Geographic milestone: Coca-Cola is now sold in at least one soda fountain in every single US state and territory, enabled by the compact shelf-stable syrup model." },
+    { "year": "1899", "event": "Candler signs the bottling deal with Thomas and Whitehead for $1 (never collected) — fixed syrup pricing, no term limits, and exclusive territories. The 'worst' deal in business history becomes the foundation of the franchise model." },
+    { "year": "1905", "event": "Congress passes the Federal Trademark Act. Coca-Cola becomes one of the first registrants, creating the legal foundation to fight the 1,000+ imitators flooding the market." },
+    { "year": "1919", "event": "Banker Ernest Woodruff stages a leveraged takeover with an investor syndicate for $25 million — effectively Coke's IPO. The secret formula is documented for the first time as loan collateral." },
+    { "year": "1923", "event": "Ernest recruits his 33-year-old son Robert Woodruff as president. Robert had been being courted by Standard Oil as a CEO heir apparent. He would run Coca-Cola for the next 60 years." },
+    { "year": "1955", "event": "Ray Kroc seals a handshake partnership with Coke's fountain division head Waddy Pratt. No formal contract for 40 years — just mutual trust and aligned incentives that would become one of the most valuable corporate relationships in history." },
+    { "year": "1965", "event": "Pepsi acquires Frito-Lay after Coca-Cola passes on the Atlanta-based snack company. A massive strategic error — Frito-Lay would eventually generate twice the profit of Pepsi's beverage division." },
+    { "year": "1980", "event": "Roberto Goizueta, a Cuban immigrant chemical engineer and one of only two people who knew the secret formula, is appointed CEO at age 35." },
+    { "year": "1985", "event": "New Coke disaster: 99 years of the same formula scrapped after taste tests. The company never asked consumers how they'd feel if it was replaced. After 79 days and thousands of angry letters daily, Coca-Cola Classic returns." },
+    { "year": "1988", "event": "Warren Buffett buys $1.3B of Coca-Cola stock — roughly 35% of Berkshire's entire portfolio at the time. He calls it the most obvious investment he ever made." }
+  ],
+  "bizmodel": {
+    "summary": "Coca-Cola operates on a franchise bottling system where they manufacture syrup from proprietary intellectual property and spend heavily on marketing, while 200 bottling partners handle capital-intensive distribution. This creates tremendous operational leverage — capturing 27% of total system revenue with only 10% of employees. The model creates universal stakeholder alignment where everyone in the ecosystem makes money promoting Coca-Cola, turning the entire supply chain into a self-reinforcing sales force.",
+    "points": [
+      "The syrup concentrate model is pure leverage — Coke sells concentrated syrup to bottlers who handle all capital-intensive manufacturing and last-mile distribution, letting Coke focus exclusively on the highest-margin activities: formula and brand.",
+      "A federal antitrust exemption from 1980 lets Coca-Cola grant exclusive geographic territories to bottlers — legal local monopolies that eliminate internal competition and ensure bottlers invest aggressively in their markets.",
+      "The McDonald's partnership is unlike any other: custom delivery systems, syrup ratios adjusted for ice melt, and a most-favored-nation pricing clause guaranteeing McDonald's gets Coke's best price — permanently.",
+      "Revenue is still 69% concentrated in sparkling soft drinks, with 40% coming from trademark Coke products — the franchise model's durability depends heavily on one product remaining culturally relevant.",
+      "Marketing spend at Coke's scale becomes self-funding: every billboard, every ad, every sponsored event reinforces the brand for all 200 bottlers simultaneously, creating a flywheel no single bottler could afford alone."
+    ]
+  },
+  "financials": [
+    { "label": "Annual Revenue", "value": "$47B" },
+    { "label": "Net Income", "value": "$10.6B" },
+    { "label": "Net Margin", "value": "23%" },
+    { "label": "Market Cap", "value": "$300B" },
+    { "label": "System Revenue", "value": "$175B" },
+    { "label": "Daily Servings", "value": "2.2B" },
+    { "label": "Berkshire Stake", "value": "$28B" },
+    { "label": "Monster Return", "value": "$2B → $12B" },
+    { "label": "US Market Share", "value": "21%" },
+    { "label": "1892 Revenue", "value": "$46K" },
+    { "label": "1919 Acquisition", "value": "$25M" },
+    { "label": "Buffett's Cost Basis", "value": "$1.3B" }
+  ],
+  "competitive": {
+    "summary": "Coca-Cola's US market share has fallen from 60% in 1948 to 21% today. Pepsi has consistently out-innovated in new beverage categories while Coke's strength remains in the core carbonated segment it invented.",
+    "points": [
+      "Legal territorial monopolies through a federal antitrust exemption give bottlers exclusive geographic rights — a structural moat competitors can't replicate.",
+      "Brand consistency across 150 years compounds through repetition rather than reinvention, creating emotional associations no amount of advertising spend can shortcut.",
+      "The Pepsi Challenge ran for a full decade (1975-1985) before Coke responded — Pepsi gained share every single year while Coke declined, yet Coke still didn't act until New Coke.",
+      "PepsiCo's diversification into Frito-Lay and Gatorade created a more resilient business — Frito-Lay alone generates twice the profit of Pepsi's entire beverage division.",
+      "Late entry into energy drinks forced Coke into expensive acquisitions and partnerships — they paid $2B for a Monster stake worth $12B today, still a win but not the organic growth Pepsi captured with Gatorade.",
+      "The antitrust exemption that protects Coke also constrains it — bottlers have permanent contracts that make renegotiation or consolidation extremely difficult."
+    ]
+  },
+  "lessons": {
+    "points": [
+      "The 'worst' deals can create the best business models — Candler's bottling contract (rights for $1, no term limits, fixed pricing) looked catastrophic but enabled capital-free national scale that became Coke's core moat.",
+      "Universal stakeholder alignment is the ultimate competitive advantage — when everyone in your ecosystem profits from promoting your product, you've built a sales force that doesn't show up on your payroll.",
+      "Trade secrets can be more durable than patents — the Coca-Cola formula has been protected for 140 years and counting, versus a patent that would have expired in 20.",
+      "Counter-positioning only works when the incumbent is structurally unable to respond — Pepsi's 12oz bottles exploited Coke's commitment to the 6.5oz contour bottle, a constraint Coke couldn't escape without breaking thousands of agreements.",
+      "Brand attachment is emotional, not rational — Coke's 200,000-person taste test proved New Coke was objectively better. They just never asked how people would feel if the original disappeared."
+    ]
+  },
+  "quotes": [
+    {
+      "text": "We are not building Coca-Cola alone for today. We are building Coca-Cola forever. It is our hope that Coca-Cola will remain the national drink to the end of time.",
+      "speaker": "Harold Hirsch, Coca-Cola's General Counsel"
+    },
+    {
+      "text": "Some critics will say that Coca-Cola made a marketing mistake. Some cynic will say that we planned the whole thing. The truth is, we are not that dumb and we are not that smart.",
+      "speaker": "Don Keough, on New Coke"
+    },
+    {
+      "text": "I'd rather fight than switch.",
+      "speaker": "Robert Woodruff — his response when told Pepsi was cheaper"
+    }
+  ],
+  "discussion": {
+    "questions": [
+      "How did Coca-Cola's accidental franchise model through the 1899 bottling contract become more strategically valuable than any planned distribution system could have been?",
+      "What does the 79-day New Coke disaster reveal about the difference between rational market research and emotional brand attachment in consumer behavior?",
+      "How sustainable is Coca-Cola's business model when health consciousness threatens the core carbonated beverage category?",
+      "Why did Berkshire Hathaway's famous Coca-Cola investment underperform the S&P 500 despite being one of Buffett's most celebrated picks?",
+      "Could other companies replicate Coca-Cola's universal stakeholder alignment model, or was it uniquely enabled by their industry dynamics and historical timing?"
+    ]
+  }
+}
