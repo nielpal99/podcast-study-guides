@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coca-Cola — Acquired Study Guide</title>
+<meta name="description" content="Founding timeline, business model breakdown, financial milestones, and AI-powered Q&A — all from the Acquired Coca-Cola episode.">
+<meta property="og:title" content="Coca-Cola — Acquired Study Guide">
+<meta property="og:description" content="Founding timeline, business model breakdown, financial milestones, and AI-powered Q&A — all from the Acquired Coca-Cola episode.">
+<meta property="og:url" content="https://podcast-study-guides.vercel.app/acquired/coca-cola">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Coca-Cola — Acquired Study Guide">
+<meta name="twitter:description" content="Founding timeline, business model breakdown, financial milestones, and AI-powered Q&A — all from the Acquired Coca-Cola episode.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -699,7 +707,7 @@ async function sendQuestion() {
     sEl.innerHTML = data.sources.map(s => `
       <div class="chat-source">
         <div class="chat-source-num">Source ${s.id}</div>
-        ${s.text}
+        <p style="margin:0">${s.text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>
       </div>
     `).join('');
 

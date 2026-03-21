@@ -37,8 +37,8 @@ def query_episode(episode_slug: str, question: str) -> dict:
 
     query_engine = CitationQueryEngine.from_args(
         index,
-        similarity_top_k=5,
-        citation_chunk_size=512,
+        similarity_top_k=7,
+        citation_chunk_size=1024,
     )
 
     response = query_engine.query(question)
@@ -47,7 +47,7 @@ def query_episode(episode_slug: str, question: str) -> dict:
     for i, node in enumerate(response.source_nodes, 1):
         sources.append({
             "id": i,
-            "text": node.node.get_content().strip()[:400],
+            "text": node.node.get_content().strip(),
             "score": round(node.score, 3) if node.score else None,
         })
 
