@@ -53,7 +53,7 @@ def query_episode(episode_slug: str, question: str) -> dict:
 
     query_engine = CitationQueryEngine.from_args(
         index,
-        similarity_top_k=7,
+        similarity_top_k=5,
         citation_chunk_size=1024,
         citation_qa_template=CITATION_QA_TEMPLATE,
     )

@@ -708,7 +708,9 @@ async function sendQuestion() {
       .map(p => `<p style="margin:0 0 0.6rem">${p.trim().replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>`)
       .join('');
 
-    sEl.innerHTML = data.sources.map(s => {
+    const citedIds = new Set([...data.answer.matchAll(/\[(\d+)\]/g)].map(m => parseInt(m[1])));
+    const usedSources = data.sources.filter(s => citedIds.has(s.id));
+    sEl.innerHTML = usedSources.map(s => {
       const sentences = s.text.match(/[^.!?]+[.!?]+/g) || [s.text];
       let preview = '';
       for (const sent of sentences) {
