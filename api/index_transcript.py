@@ -28,6 +28,25 @@ def slugify(name: str) -> str:
     return re.sub(r"[\s-]+", "-", slug)
 
 
+def index_from_text(title: str, text: str) -> str:
+    """Index raw text directly. Returns the episode slug."""
+    slug = slugify(title)
+    persist_dir = Path("indexes") / slug
+
+    if persist_dir.exists():
+        return slug
+
+    doc = Document(text=text, metadata={"source": title, "episode": slug})
+
+    parser = SentenceSplitter(chunk_size=1024, chunk_overlap=100)
+    nodes = parser.get_nodes_from_documents([doc])
+
+    index = VectorStoreIndex(nodes, show_progress=False)
+    persist_dir.mkdir(parents=True, exist_ok=True)
+    index.storage_context.persist(persist_dir=str(persist_dir))
+    return slug
+
+
 def index_transcript(transcript_path: str):
     path = Path(transcript_path)
     if not path.exists():
@@ -44,19 +63,10 @@ def index_transcript(transcript_path: str):
 
     print(f"Loading transcript: {path.name} ({path.stat().st_size // 1024}KB)")
     text = path.read_text(encoding="utf-8")
-    doc = Document(text=text, metadata={"source": path.name, "episode": slug})
 
     print("Splitting into nodes...")
-    parser = SentenceSplitter(chunk_size=1024, chunk_overlap=100)
-    nodes = parser.get_nodes_from_documents([doc])
-    print(f"  {len(nodes)} nodes created")
-
-    print("Embedding and building index (this calls OpenAI)...")
-    index = VectorStoreIndex(nodes, show_progress=True)
-
-    persist_dir.mkdir(parents=True, exist_ok=True)
-    index.storage_context.persist(persist_dir=str(persist_dir))
-    print(f"Index saved to {persist_dir}/")
+    slug = index_from_text(path.stem, text)
+    print(f"Index saved to indexes/{slug}/")
     return slug
 
 
