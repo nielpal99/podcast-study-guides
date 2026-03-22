@@ -26,6 +26,7 @@ def get_youtube_video_id(url: str) -> str | None:
 
 def extract_youtube(url: str) -> tuple[str, str]:
     """Returns (title, transcript_text)."""
+    import os
     from youtube_transcript_api import YouTubeTranscriptApi
     from youtube_transcript_api.formatters import TextFormatter
 
@@ -33,7 +34,10 @@ def extract_youtube(url: str) -> tuple[str, str]:
     if not video_id:
         raise ValueError(f"Could not extract video ID from URL: {url}")
 
-    transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
+    proxy_url = os.environ.get("PROXY_URL")
+    proxies = {"http": proxy_url, "https": proxy_url} if proxy_url else None
+
+    transcript_list = YouTubeTranscriptApi.get_transcript(video_id, proxies=proxies)
     formatter = TextFormatter()
     text = formatter.format_transcript(transcript_list)
 
