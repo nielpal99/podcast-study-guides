@@ -209,7 +209,7 @@
     position: fixed;
     bottom: 72px; left: 0; right: 0;
     z-index: 190;
-    max-height: 40vh;
+    max-height: 52vh;
     overflow-y: auto;
     background: white;
     border-top: 1px solid var(--border);
@@ -702,14 +702,26 @@ async function sendQuestion() {
     }
 
     const data = await res.json();
-    aEl.textContent = data.answer;
+    aEl.innerHTML = data.answer
+      .split(/\n+/)
+      .filter(p => p.trim())
+      .map(p => `<p style="margin:0 0 0.6rem">${p.trim().replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>`)
+      .join('');
 
-    sEl.innerHTML = data.sources.map(s => `
-      <div class="chat-source">
-        <div class="chat-source-num">Source ${s.id}</div>
-        <p style="margin:0">${s.text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>
-      </div>
-    `).join('');
+    sEl.innerHTML = data.sources.map(s => {
+      const sentences = s.text.match(/[^.!?]+[.!?]+/g) || [s.text];
+      let preview = '';
+      for (const sent of sentences) {
+        if ((preview + sent).length > 300) break;
+        preview += sent;
+      }
+      if (!preview) preview = sentences[0];
+      return `
+        <div class="chat-source">
+          <div class="chat-source-num">Source ${s.id}</div>
+          <p style="margin:0">${preview.trim().replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>
+        </div>`;
+    }).join('');
 
   } catch (e) {
     aEl.textContent = `Error: ${e.message}. Make sure the server is running: python -m uvicorn api.server:app --reload`;
